@@ -64,4 +64,8 @@ const clients = [
   },
 ];
 
-console.log({ trainers, clients });
+const trainersSorted = trainers.sort((a, b) => b.reputation - a.reputation);
+
+const clientsSorted = clients.sort((a, b) => b.importance - a.importance);
+
+console.log({ trainersSorted, clientsSorted });
