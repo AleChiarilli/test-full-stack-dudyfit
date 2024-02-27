@@ -1,34 +1,67 @@
-/**
- * Some predefined delay values (in milliseconds).
- */
-export enum Delays {
-  Short = 500,
-  Medium = 2000,
-  Long = 5000,
-}
+const trainers = [
+  {
+    name: 'A',
+    reputation: 4.5,
+    availableSlots: 1,
+  },
+  {
+    name: 'B',
+    reputation: 3.2,
+    availableSlots: 4,
+  },
+  {
+    name: 'C',
+    reputation: 1.2,
+    availableSlots: 3,
+  },
+  {
+    name: 'D',
+    reputation: 3.4,
+    availableSlots: 2,
+  },
+];
 
-/**
- * Returns a Promise<string> that resolves after a given time.
- *
- * @param {string} name - A name.
- * @param {number=} [delay=Delays.Medium] - A number of milliseconds to delay resolution of the Promise.
- * @returns {Promise<string>}
- */
-function delayedHello(
-  name: string,
-  delay: number = Delays.Medium,
-): Promise<string> {
-  return new Promise((resolve: (value?: string) => void) =>
-    setTimeout(() => resolve(`Hello, ${name}`), delay),
-  );
-}
+const clients = [
+  {
+    name: 'q',
+    importance: 2.6,
+  },
+  {
+    name: 'r',
+    importance: 3.7,
+  },
+  {
+    name: 's',
+    importance: 8.5,
+  },
+  {
+    name: 't',
+    importance: 9.7,
+  },
+  {
+    name: 'u',
+    importance: 2.6,
+  },
+  {
+    name: 'v',
+    importance: 4.7,
+  },
+  {
+    name: 'w',
+    importance: 5.6,
+  },
+  {
+    name: 'x',
+    importance: 3.7,
+  },
+  {
+    name: 'y',
+    importance: 8.1,
+  },
+  {
+    name: 'z',
+    importance: 2.5,
+  },
+];
 
-// Please see the comment in the .eslintrc.json file about the suppressed rule!
-// Below is an example of how to use ESLint errors suppression. You can read more
-// at https://eslint.org/docs/latest/user-guide/configuring/rules#disabling-rules
-
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export async function greeter(name: any) { // eslint-disable-line @typescript-eslint/no-explicit-any
-  // The name parameter should be of type string. Any is used only to trigger the rule.
-  return await delayedHello(name, Delays.Long);
-}
+console.log({ trainers, clients });
