@@ -1,4 +1,15 @@
-const trainers = [
+type Trainer = {
+  name: string;
+  reputation: number;
+  availableSlots: number;
+};
+
+type Client = {
+  name: string;
+  importance: number;
+};
+
+const trainers: Trainer[] = [
   {
     name: 'A',
     reputation: 4.5,
@@ -21,7 +32,7 @@ const trainers = [
   },
 ];
 
-const clients = [
+const clients: Client[] = [
   {
     name: 'q',
     importance: 2.6,
@@ -65,7 +76,26 @@ const clients = [
 ];
 
 const trainersSorted = trainers.sort((a, b) => b.reputation - a.reputation);
-
 const clientsSorted = clients.sort((a, b) => b.importance - a.importance);
 
-console.log({ trainersSorted, clientsSorted });
+type TrainerWithClients = Trainer & {
+  assignedClients: Client[];
+};
+
+const trainersWithClients: TrainerWithClients[] = [];
+
+for (let index = 0; index < clientsSorted.length; index++) {
+  const currentClient = clientsSorted[index];
+
+  const availableTrainer = trainersSorted.find(
+    (trainer) => trainer.availableSlots >= 1,
+  );
+
+  const newTrainer = { ...availableTrainer, assignedClients: [currentClient] };
+
+  trainersWithClients.push(newTrainer);
+}
+
+trainersWithClients.forEach(({ name, reputation, assignedClients }) =>
+  console.log({ name, reputation, assignedClients }),
+);
