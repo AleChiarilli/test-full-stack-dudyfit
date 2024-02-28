@@ -82,20 +82,25 @@ type TrainerWithClients = Trainer & {
   assignedClients: Client[];
 };
 
-const trainersWithClients: TrainerWithClients[] = [];
+const trainersWithClients: TrainerWithClients[] = trainersSorted.map(
+  (trainer) => ({ ...trainer, assignedClients: [] }),
+);
 
 for (let index = 0; index < clientsSorted.length; index++) {
   const currentClient = clientsSorted[index];
 
-  const availableTrainer = trainersSorted.find(
+  const availableTrainerIndex = trainersWithClients.findIndex(
     (trainer) => trainer.availableSlots >= 1,
   );
 
-  const newTrainer = { ...availableTrainer, assignedClients: [currentClient] };
+  trainersWithClients[availableTrainerIndex].assignedClients.push(
+    currentClient,
+  );
 
-  trainersWithClients.push(newTrainer);
+  trainersWithClients[availableTrainerIndex].availableSlots--;
 }
 
-trainersWithClients.forEach(({ name, reputation, assignedClients }) =>
-  console.log({ name, reputation, assignedClients }),
+trainersWithClients.forEach(
+  ({ name, reputation, availableSlots, assignedClients }) =>
+    console.log({ name, reputation, availableSlots, assignedClients }),
 );
