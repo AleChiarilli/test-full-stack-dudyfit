@@ -1,3 +1,43 @@
+# Test Full-Stack DudyFit
+Éste repositorio contiene la solución al Test Full-Stack DudyFit, que consiste en
+la aplicación de clientes a entrenadores basado en preferencias específicas.
+El objetivo es maximizar la satisfacción global de los clientes, considerando
+la reputación de los entrenadores, y la importancia asignada de los clientes a la reputación de los entrenadores.
+
+## Enfoque de solución
+El problema se soluciona usando Node.js y TypeScript.
+La métrica de la satisfacción es determinada utilizando una operación matemática simple, en la que se busca asignar los entrenadores con mejor reputación a los clientes que más les importa disponer de clases con entrenadores de mejor reputación:
+
+    S = Σ (R_{i(j)} × I_j)
+
+Donde:
+ S es la métrica de satisfacción global.
+ R_{i(j)} es la reputación del entrenador asignado al cliente j.
+ I_j es la importancia del cliente j respecto a la reputación del entrenador.
+
+Para realizar ésta operación, se han ordenado a los entrenadores y a los clientes en función de su "Reputación" e "Importancia del Entrenador", respectivamente, para así garantizar que siempre a los clientes que más les interese conseguir plazas con entrenadores con reputación, tengan la prioridad de asignación.
+
+Éste enfoque garantiza además, que los entrenadores con mejor reputación gozarán de un mayor número de clientes, lo que a su vez asegura que los clientes tienden a gozar de clases con el mejor entrenador disponible, de ésta manera se premia también a los mejores entrenadores.
+
+Por otro lado, en términos prácticos, le permite a los entrenadores "Novell", poder gestionar clases con menos clientes, para brindarles más tiempo y foco a los individuos, ofreciendole la facilidad de incrementar su práctica y eventualmente, su reputación.
+
+## Consideraciones
+
+El código se ha intentado mantener lo suficientemente autoexplicativo.
+Sin embargo, se han agregado algunas anotaciones para futuras referencias, mejoras, o para facilitar comprensión a nuevos y terceros.
+
+Éste proyecto fue creado a partir del boilerplate:
+"https://github.com/jsynowiec/node-typescript-boilerplate"
+para agilizar el proceso de instalación del entorno de trabajo.
+
+## Instrucciones "Plug and Play"
+1. Clonar el repositorio en tu máquina local o virtual.
+2. Asegurarte de que tienes instaladas las dependencias y módulos con "npm install".
+3. En la terminal, ejecutar el comando "npm run build && npm run start".
+
+Más información de cómo instalar e inicializar el boilerplate se encuentrará más abajo.
+
+
 # node-typescript-boilerplate
 
 [![Sponsor][sponsor-badge]][sponsor]
@@ -54,13 +94,10 @@ unzip node-typescript-boilerplate.zip && rm node-typescript-boilerplate.zip
 ## Available Scripts
 
 - `clean` - remove coverage data, Jest cache and transpiled files,
-- `prebuild` - lint source files and tests before building,
 - `build` - transpile TypeScript to ES6,
 - `build:watch` - interactive watch mode to automatically transpile source files,
 - `lint` - lint source files and tests,
 - `prettier` - reformat files,
-- `test` - run tests,
-- `test:watch` - interactive watch mode to automatically re-run tests
 
 ## Additional Information
 

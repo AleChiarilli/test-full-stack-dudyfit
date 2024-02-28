@@ -1,3 +1,4 @@
+// Tipados de los objetos
 type Trainer = {
   name: string;
   reputation: number;
@@ -9,6 +10,7 @@ type Client = {
   importance: number;
 };
 
+//Asignación de valor a las claves de Trainer
 const trainers: Trainer[] = [
   {
     name: 'A',
@@ -32,6 +34,7 @@ const trainers: Trainer[] = [
   },
 ];
 
+//Asignación de valor a las claves de Client
 const clients: Client[] = [
   {
     name: 'q',
@@ -75,14 +78,17 @@ const clients: Client[] = [
   },
 ];
 
+//Ordenar los arrays de entrenadores y clientes
 const trainersSorted = trainers.sort((a, b) => b.reputation - a.reputation);
 const clientsSorted = clients.sort((a, b) => b.importance - a.importance);
 
+// Tipado del nuevo objeto "Entrenador con clientes"
 type TrainerWithClients = Trainer & {
   assignedClients: Client[];
   clientsSatisfaction: number;
 };
 
+// Asignación de las nuevas claves al objeto
 const trainersWithClients: TrainerWithClients[] = trainersSorted.map(
   (trainer) => ({ ...trainer, assignedClients: [], clientsSatisfaction: 0 }),
 );
@@ -94,12 +100,26 @@ for (let index = 0; index < clientsSorted.length; index++) {
     (trainer) => trainer.availableSlots >= 1,
   );
 
+  // Verificar si hay al menos un entrenador con plazas disponibles
+  const hasAvailableTrainer = trainersWithClients.some(
+    (trainer) => trainer.availableSlots >= 1,
+  );
+
+  console.log(hasAvailableTrainer);
+
+  if (!hasAvailableTrainer) {
+    console.log('No quedan entrenadores con plazas disponibles.');
+    break; // Salir del bucle
+  }
+
+  //Iteración para asignar el nuevo cliente al entrenador con plaza(s) disponible(s)
   trainersWithClients[availableTrainerIndex].assignedClients.push(
     currentClient,
   );
 
   trainersWithClients[availableTrainerIndex].availableSlots--;
 
+  // Cálculo de satisfacción (importancia * reputación)
   trainersWithClients[availableTrainerIndex].assignedClients.forEach(
     (client) =>
       (trainersWithClients[availableTrainerIndex].clientsSatisfaction +=
@@ -108,25 +128,27 @@ for (let index = 0; index < clientsSorted.length; index++) {
   );
 }
 
+// Cálculo de la satisfacción global
 const totalSatisfaction = trainersWithClients.reduce((acc, currentTrainer) => {
   return acc + currentTrainer.clientsSatisfaction;
 }, 0);
 
-trainersWithClients.forEach(
-  ({
-    name,
-    reputation,
-    availableSlots,
-    assignedClients,
-    clientsSatisfaction,
-  }) =>
-    console.log({
-      name,
-      reputation,
-      availableSlots,
-      assignedClients,
-      clientsSatisfaction,
-    }),
-);
+// Print en consola
+// trainersWithClients.forEach(
+//   ({
+//     name,
+//     reputation,
+//     availableSlots,
+//     assignedClients,
+//     clientsSatisfaction,
+//   }) =>
+//     console.log({
+//       name,
+//       reputation,
+//       availableSlots,
+//       assignedClients,
+//       clientsSatisfaction,
+//     }),
+// );
 
 console.log({ totalSatisfaction });
