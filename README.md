@@ -1,12 +1,13 @@
 # Test Full-Stack DudyFit
 Éste repositorio contiene la solución al Test Full-Stack DudyFit, que consiste en
-la aplicación de clientes a entrenadores basado en preferencias específicas.
-El objetivo es maximizar la satisfacción global de los clientes, considerando
-la reputación de los entrenadores, y la importancia asignada de los clientes a la reputación de los entrenadores.
+la asignación de Clientes a Entrenadores basado en preferencias específicas.
+El objetivo es maximizar la satisfacción global de los Clientes, considerando
+la reputación de los Entrenadores, y la importancia asignada de los Clientes
+a dicha reputación.
 
 ## Enfoque de solución
-El problema se soluciona usando Node.js y TypeScript.
-La métrica de la satisfacción es determinada utilizando una operación matemática simple, en la que se busca asignar los entrenadores con mejor reputación a los clientes que más les importa disponer de clases con entrenadores de mejor reputación:
+La solución aplica Node.js y TypeScript.
+La métrica de la satisfacción es determinada utilizando una operación matemática simple, en la que se busca asignar los Entrenadores con mejor reputación a los Clientes que más les importa disponer de clases con Entrenadores de mejor reputación:
 
     S = Σ (R_{i(j)} × I_j)
 
@@ -15,11 +16,11 @@ Donde:
  R_{i(j)} es la reputación del entrenador asignado al cliente j.
  I_j es la importancia del cliente j respecto a la reputación del entrenador.
 
-Para realizar ésta operación, se han ordenado a los entrenadores y a los clientes en función de su "Reputación" e "Importancia del Entrenador", respectivamente, para así garantizar que siempre a los clientes que más les interese conseguir plazas con entrenadores con reputación, tengan la prioridad de asignación.
+Para realizar ésta operación, se han ordenado a los Entrenadores y a los Clientes en función de su "Reputación" e "Importancia del Entrenador", respectivamente, para así garantizar que siempre a los Clientes que estén más interesados en conseguir plazas con Entrenadores con reputación, y tengan la prioridad de asignación.
 
-Éste enfoque garantiza además, que los entrenadores con mejor reputación gozarán de un mayor número de clientes, lo que a su vez asegura que los clientes tienden a gozar de clases con el mejor entrenador disponible, de ésta manera se premia también a los mejores entrenadores.
+Éste enfoque garantiza además, que los Entrenadores con mejor reputación gozarán de un mayor número de Clientes, lo que a su vez asegura que los Clientes tienden a gozar de clases con el mejor entrenador disponible, de ésta manera se premia también a los mejores Entrenadores.
 
-Por otro lado, en términos prácticos, le permite a los entrenadores "Novell", poder gestionar clases con menos clientes, para brindarles más tiempo y foco a los individuos, ofreciendole la facilidad de incrementar su práctica y eventualmente, su reputación.
+Durante el proceso de asignación, los objetos entrenador van mutando para ir albergando también las propiedades de Clientes asignados, junto con la Satisfacción Estimada Alcanzada de cada uno de ellos.
 
 ## Consideraciones
 

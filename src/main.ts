@@ -78,77 +78,65 @@ const clients: Client[] = [
   },
 ];
 
-//Ordenar los arrays de entrenadores y clientes
-const trainersSorted = trainers.sort((a, b) => b.reputation - a.reputation);
-const clientsSorted = clients.sort((a, b) => b.importance - a.importance);
+function assignClients(trainers: Trainer[], clients: Client[]): number {
+  // Ordenar los arrays de entrenadores y clientes
+  const trainersSorted = trainers.sort((a, b) => b.reputation - a.reputation);
+  const clientsSorted = clients.sort((a, b) => b.importance - a.importance);
 
-// Tipado del nuevo objeto "Entrenador con clientes"
-type TrainerWithClients = Trainer & {
-  assignedClients: Client[];
-  clientsSatisfaction: number;
-};
+  // Tipado del nuevo objeto "Entrenador con clientes"
+  type TrainerWithClients = Trainer & {
+    assignedClients: Client[];
+    clientsSatisfaction: number;
+  };
 
-// Asignación de las nuevas claves al objeto
-const trainersWithClients: TrainerWithClients[] = trainersSorted.map(
-  (trainer) => ({ ...trainer, assignedClients: [], clientsSatisfaction: 0 }),
-);
-
-for (let index = 0; index < clientsSorted.length; index++) {
-  const currentClient = clientsSorted[index];
-
-  const availableTrainerIndex = trainersWithClients.findIndex(
-    (trainer) => trainer.availableSlots >= 1,
+  // Asignación de las nuevas claves al objeto
+  const trainersWithClients: TrainerWithClients[] = trainersSorted.map(
+    (trainer) => ({ ...trainer, assignedClients: [], clientsSatisfaction: 0 }),
   );
 
-  // Verificar si hay al menos un entrenador con plazas disponibles
-  const hasAvailableTrainer = trainersWithClients.some(
-    (trainer) => trainer.availableSlots >= 1,
-  );
+  for (let index = 0; index < clientsSorted.length; index++) {
+    const currentClient = clientsSorted[index];
 
-  console.log(hasAvailableTrainer);
+    const availableTrainerIndex = trainersWithClients.findIndex(
+      (trainer) => trainer.availableSlots >= 1,
+    );
 
-  if (!hasAvailableTrainer) {
-    console.log('No quedan entrenadores con plazas disponibles.');
-    break; // Salir del bucle
+    // Verificar si hay al menos un entrenador con plazas disponibles
+    const hasAvailableTrainer = trainersWithClients.some(
+      (trainer) => trainer.availableSlots >= 1,
+    );
+
+    if (!hasAvailableTrainer) {
+      console.log('No quedan entrenadores con plazas disponibles.');
+      break; // Salir del bucle
+    }
+
+    // Iteración para asignar el nuevo cliente al entrenador con plaza(s) disponible(s)
+    trainersWithClients[availableTrainerIndex].assignedClients.push(
+      currentClient,
+    );
+
+    trainersWithClients[availableTrainerIndex].availableSlots--;
+
+    // Cálculo de satisfacción (importancia * reputación)
+    trainersWithClients[availableTrainerIndex].assignedClients.forEach(
+      (client) =>
+        (trainersWithClients[availableTrainerIndex].clientsSatisfaction +=
+          client.importance *
+          trainersWithClients[availableTrainerIndex].reputation),
+    );
   }
 
-  //Iteración para asignar el nuevo cliente al entrenador con plaza(s) disponible(s)
-  trainersWithClients[availableTrainerIndex].assignedClients.push(
-    currentClient,
+  // Cálculo de la satisfacción global
+  const totalSatisfaction = trainersWithClients.reduce(
+    (acc, currentTrainer) => {
+      return acc + currentTrainer.clientsSatisfaction;
+    },
+    0,
   );
 
-  trainersWithClients[availableTrainerIndex].availableSlots--;
-
-  // Cálculo de satisfacción (importancia * reputación)
-  trainersWithClients[availableTrainerIndex].assignedClients.forEach(
-    (client) =>
-      (trainersWithClients[availableTrainerIndex].clientsSatisfaction +=
-        client.importance *
-        trainersWithClients[availableTrainerIndex].reputation),
-  );
+  return totalSatisfaction;
 }
 
-// Cálculo de la satisfacción global
-const totalSatisfaction = trainersWithClients.reduce((acc, currentTrainer) => {
-  return acc + currentTrainer.clientsSatisfaction;
-}, 0);
-
-// Print en consola
-// trainersWithClients.forEach(
-//   ({
-//     name,
-//     reputation,
-//     availableSlots,
-//     assignedClients,
-//     clientsSatisfaction,
-//   }) =>
-//     console.log({
-//       name,
-//       reputation,
-//       availableSlots,
-//       assignedClients,
-//       clientsSatisfaction,
-//     }),
-// );
-
-console.log({ totalSatisfaction });
+// Ejemplo de uso de la función
+const totalSatisfaction = assignClients(trainers, clients);
