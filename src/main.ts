@@ -80,10 +80,11 @@ const clientsSorted = clients.sort((a, b) => b.importance - a.importance);
 
 type TrainerWithClients = Trainer & {
   assignedClients: Client[];
+  clientsSatisfaction: number;
 };
 
 const trainersWithClients: TrainerWithClients[] = trainersSorted.map(
-  (trainer) => ({ ...trainer, assignedClients: [] }),
+  (trainer) => ({ ...trainer, assignedClients: [], clientsSatisfaction: 0 }),
 );
 
 for (let index = 0; index < clientsSorted.length; index++) {
@@ -98,9 +99,34 @@ for (let index = 0; index < clientsSorted.length; index++) {
   );
 
   trainersWithClients[availableTrainerIndex].availableSlots--;
+
+  trainersWithClients[availableTrainerIndex].assignedClients.forEach(
+    (client) =>
+      (trainersWithClients[availableTrainerIndex].clientsSatisfaction +=
+        client.importance *
+        trainersWithClients[availableTrainerIndex].reputation),
+  );
 }
 
+const totalSatisfaction = trainersWithClients.reduce((acc, currentTrainer) => {
+  return acc + currentTrainer.clientsSatisfaction;
+}, 0);
+
 trainersWithClients.forEach(
-  ({ name, reputation, availableSlots, assignedClients }) =>
-    console.log({ name, reputation, availableSlots, assignedClients }),
+  ({
+    name,
+    reputation,
+    availableSlots,
+    assignedClients,
+    clientsSatisfaction,
+  }) =>
+    console.log({
+      name,
+      reputation,
+      availableSlots,
+      assignedClients,
+      clientsSatisfaction,
+    }),
 );
+
+console.log({ totalSatisfaction });
